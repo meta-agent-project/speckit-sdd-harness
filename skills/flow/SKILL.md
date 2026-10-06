@@ -1,0 +1,69 @@
+---
+name: flow
+description: 하네스의 기능 개발 workflow. 영역 하나를 기능 spec → 승인 → 디자인(HTML 시안) → 승인·design-system 갱신 → plan → tasks → TDD 구현 → 전체 테스트 → 수렴 → 마무리 커밋까지 단계와 승인 게이트대로 진행한다. "다음 영역 시작", "NNN 영역 진행", "이어서 하자", "지금 어디까지 했어" 때 사용.
+---
+
+# flow
+
+영역 하나를 끝까지 만드는 순서. 각 단계는 정해진 스킬·Spec Kit 명령을 부르고, **게이트**에서는 사용자의 명시적 승인 없이 넘어가지 않는다.
+
+규칙(문서 언어 · 디자인 · TDD · Spec Kit 무수정)은 세션 시작 때 주입되는 하네스 `rules.md`를 따른다.
+
+## 진행 상태 (파일에서 읽는다, 따로 기록하지 않음)
+`ROADMAP.md`나 `.specify/memory/constitution.md`가 없으면 `living-spec` start부터 한다. `flow`를 부르면 먼저 대상 영역을 정하고(사용자가 말한 영역, 없으면 ROADMAP에서 `spec 작성`·`진행 중`인 영역, 없으면 작업 순서상 다음 `예정` 영역) `.specify/feature.json`에 `{"feature_directory":"specs/<ROADMAP 폴더>"}`를 쓴다. 그다음 아래 표에서 처음으로 "끝남"이 아닌 단계부터 이어 간다. 어디서 시작하는지 한 줄로 알린다.
+
+| 단계 | 끝남 판정 |
+|---|---|
+| 1 기능 spec · 게이트① | `spec.md`의 상태가 `승인됨` |
+| 2 디자인 · 게이트② | spec에 `## 화면`이 없거나, `specs/design-system.md` "승인 기록"에 이 영역 행이 있고 그 뒤 `## 화면`이 바뀌지 않음 |
+| 3 plan | `plan.md`가 있고 spec·design-system보다 새로움 |
+| 4 tasks | `tasks.md`가 있고 `tdd` A 검사 통과 |
+| 5 TDD 구현 | `tasks.md`의 작업이 모두 체크됨 |
+| 6 전체 테스트 | `tdd` C가 모두 통과 |
+| 7 수렴 | `/speckit-converge`가 "Converged" |
+| 8 마무리 | ROADMAP 상태 `완료`, 커밋됨 |
+
+## 단계
+
+### 1. 기능 spec → 게이트① 승인
+- 새 영역: `living-spec` change의 "새 영역" 방식으로 `/speckit-specify`(폴더 이름·ROADMAP 행 전달). 기존 영역: `living-spec` change로 spec을 고친다.
+- 모호한 점이 남으면 `/speckit-clarify`.
+- ROADMAP 상태 `spec 작성`.
+- **게이트①**: spec 요약(사용자 스토리 · 요구사항 수 · 화면 · 가정)을 5~10줄로 보이고 AskUserQuestion으로 승인 / 고칠 점을 받는다. 고칠 점이 있으면 고치고 다시 묻는다. 승인되면 `spec.md` 상태를 `승인됨 (Approved)`으로.
+
+### 2. 디자인 → 게이트② 승인 · design-system 갱신
+- spec에 `## 화면`이 없으면 "화면 없음"이라 알리고 3으로.
+- 있으면 `mockup`: HTML 시안 3개 → 고르기 → 다듬기.
+- **게이트②**: 사용자가 최종 시안을 승인하면 `mockup`이 `specs/design-system.md`의 토큰·부품·화면 패턴과 "승인 기록"을 갱신한다.
+
+### 3. plan
+- `/speckit-plan`. 기존 `plan.md`가 있으면 템플릿을 다시 복사하지 않으므로 모든 절(기술 맥락 · Constitution Check · 구조)을 다시 검토해 고친다.
+- plan에 반드시: 화면마다 쓰는 `design-system.md` 부품 이름, 테스트 도구와 **전체 테스트 실행 명령**.
+- 의존 영역은 `contracts/`·`data-model.md`만 읽는다. `backlog.md`에 이 영역 항목이 있으면 입력으로 쓰고 backlog에서 지운다.
+- 기술 결정을 3~5줄로 알리고 다음으로 간다(게이트 아님).
+
+### 4. tasks
+- 기존 영역이면 `/speckit-tasks`가 체크 표시를 지우므로 먼저 커밋한다.
+- `/speckit-tasks`를 부를 때 인자에 `TDD: 사용자 스토리마다 테스트 작업을 구현보다 먼저 포함`을 넣는다.
+- `tdd` A(tasks 검사)로 빠진 테스트 작업을 채운다.
+- `/speckit-analyze`가 지적한 불일치를 고친다.
+- 기존 영역이면 `/speckit-converge`로 이미 된 일을 다시 체크한다.
+
+### 5. TDD 구현
+- ROADMAP 상태 `진행 중`.
+- `tdd` B 규칙을 지키며 `/speckit-implement`: 사용자 스토리마다 테스트 작성 → 실패 확인 → 구현 → 통과 확인.
+
+### 6. 전체 테스트
+- `tdd` C: plan의 명령으로 전체 테스트를 실제로 실행한다. 실패·건너뜀이 하나라도 있으면 5로 돌아간다.
+
+### 7. 수렴
+- `/speckit-converge`. 남은 작업이 추가되면 5로. "Converged"까지 반복.
+
+### 8. 마무리
+- ROADMAP 상태 `완료` → `llm-wiki` → spec · plan · tasks · 코드 · 테스트 · ROADMAP · design-system · wiki를 **커밋 하나**로.
+- 무엇을 만들었는지, 테스트 결과, 남은 위험을 5~10줄로 보고한다.
+
+## 하지 않는 것
+- 게이트에서 승인을 추측하지 않는다. "좋아 보여요" 같은 모호한 답은 승인인지 다시 묻는다.
+- 단계를 건너뛰지 않는다. 사용자가 건너뛰라고 하면 무엇을 잃는지 한 줄로 알리고 따른다.
+- 시안 파일을 저장소에 넣지 않는다.

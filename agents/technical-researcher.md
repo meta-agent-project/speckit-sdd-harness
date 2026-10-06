@@ -23,7 +23,7 @@ disallowedTools: Write, Edit, NotebookEdit
 
 ## 프로젝트 전제
 
-조사 전에 `project/.specify/memory/constitution.md`의 "기술 제약"을 읽는다. 추천안은 이 제약(개인용 데스크톱 앱, Rust + React + Tauri 2, Remotion, LLM은 구독제 claude/codex CLI spawn)과 호환되어야 한다. 하드웨어 기준은 Windows 11, NVIDIA RTX 3060 12GB. 이미 조사된 후보가 있는지 `project/backlog.md`도 확인한다.
+조사 전에 `.specify/memory/constitution.md`의 "기술 제약"을 읽는다. 추천안은 이 제약과 호환되어야 한다. `backlog.md`가 있으면 이미 조사된 후보와 환경 전제(하드웨어 등)도 확인한다.
 
 ## 조사 원칙
 
