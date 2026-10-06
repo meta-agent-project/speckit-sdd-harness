@@ -40,7 +40,7 @@ description: 하네스의 기능 개발 workflow. 영역 하나를 기능 spec �
 - `/speckit-plan`. 기존 `plan.md`가 있으면 템플릿을 다시 복사하지 않으므로 모든 절(기술 맥락 · Constitution Check · 구조)을 다시 검토해 고친다.
 - **plan은 한국어로 쓴다.** `setup-plan.sh`가 영어 템플릿을 복사하므로, 내용을 채우기 전에 `plan.md` 전체를 한국어로 다시 쓴다: 절 제목은 `## 기술 맥락 (Technical Context)`처럼 한국어 + 괄호 원래 이름, 안내 주석·자리 표시·`[REMOVE IF UNUSED]` 같은 템플릿 흔적은 지운다. `research.md` · `data-model.md` · `contracts/` · `quickstart.md`도 한국어. 코드·명령·파일 이름·ID만 영어.
 - plan에 반드시: 화면마다 쓰는 `design-system.md` 부품 이름, 테스트 도구와 **전체 테스트 실행 명령**.
-- 의존 영역은 `contracts/`·`data-model.md`만 읽는다. `backlog.md`에 이 영역 항목이 있으면 입력으로 쓰고 backlog에서 지운다.
+- 이 영역이 쓰는 앞 영역은 `contracts/`·`data-model.md`만 읽는다. `backlog.md`에 이 영역 항목이 있으면 입력으로 쓰고 backlog에서 지운다.
 - 기술 결정을 3~5줄로 알리고 다음으로 간다(게이트 아님).
 
 ### 4. tasks

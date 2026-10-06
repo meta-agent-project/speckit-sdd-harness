@@ -19,7 +19,7 @@ wiki는 원본에서 만든 결과물이다. 손으로 고치지 않고 매번 �
 
 | 파일 | 내용 |
 |---|---|
-| overview.md | roadmap의 비전 · 범위 밖 · 영역 지도(폴더 · 의도 · 상태 · 의존)를 그대로 요약 |
+| overview.md | roadmap의 비전 · 범위 밖 · 영역 지도(폴더 · 의도 · 상태)를 그대로 요약 |
 | spec-index.md | 영역별 절. 절마다 spec 링크, 사용자 스토리 제목, 요구사항을 `003/FR-001 한 줄 요약` 형식으로 모두 나열 |
 | architecture.md | 각 plan.md의 기술 맥락·결정을 영역별로 모음. 여러 영역에 걸친 결정은 소유 영역 표시 |
 | data-model.md | 각 영역 data-model.md의 엔티티와 contracts/ 목록을 영역별로 모음 |
