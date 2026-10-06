@@ -43,13 +43,13 @@ LLM 코딩에서 흔한 실수를 줄이기 위한 지침이다. 속도보다 �
 
 하네스 = 필요한 것만 남긴 GitHub Spec Kit + 하네스 스킬 + 이 규칙.
 - Spec Kit 명령: `speckit-specify` · `speckit-clarify` · `speckit-plan` · `speckit-tasks` · `speckit-analyze` · `speckit-implement` · `speckit-converge`. 이 명령과 `.specify/templates` · `.specify/scripts`의 내용은 고치지 않는다. 동작을 바꿀 때는 하네스 스킬에서 부르는 방식만 바꾼다.
-- 하네스 스킬: `flow`(기능 개발 순서와 승인 게이트) · `living-spec`(spec을 현재 진실로 유지: ROADMAP·변경·점검) · `mockup`(HTML 시안 3개 고르기) · `tdd`(테스트 규칙) · `llm-wiki`(wiki 생성).
-- 프로젝트 파일: `.specify/memory/constitution.md`(이 프로젝트 전용 원칙·기술 제약, 하네스 규칙은 넣지 않음) · `ROADMAP.md` · `specs/NNN-영역/` · `specs/design-system.md` · `wiki/`(자동 생성).
+- 하네스 스킬: `flow`(기능 개발 순서와 승인 게이트) · `living-spec`(spec을 현재 진실로 유지: roadmap·변경·점검) · `mockup`(HTML 시안 3개 고르기) · `tdd`(테스트 규칙) · `llm-wiki`(wiki 생성).
+- 프로젝트 파일: `.specify/memory/constitution.md`(이 프로젝트 전용 원칙·기술 제약, 하네스 규칙은 넣지 않음) · `roadmap.md` · `specs/NNN-영역/` · `specs/design-system.md` · `wiki/`(자동 생성).
 
 ## 3. 작업 방식
 
-- **항상 먼저 읽기:** `.specify/memory/constitution.md` · `ROADMAP.md` · `wiki/overview.md`. 화면을 다루면 `specs/design-system.md`도. 지금 작업하는 영역의 spec · plan · tasks만 더 읽는다. 아직 없으면 `living-spec` start로 만든다.
-- **기능 개발은 `flow`로 한다.** 기능 spec → 승인 → HTML 시안 → 승인·design-system 갱신 → plan → tasks → TDD 구현 → 전체 테스트 → 수렴 → 커밋. spec 변경·ROADMAP·어긋남 점검은 `living-spec`.
+- **항상 먼저 읽기:** `.specify/memory/constitution.md` · `roadmap.md` · `wiki/overview.md`. 화면을 다루면 `specs/design-system.md`도. 지금 작업하는 영역의 spec · plan · tasks만 더 읽는다. 아직 없으면 `living-spec` start로 만든다.
+- **기능 개발은 `flow`로 한다.** 기능 spec → 승인 → HTML 시안 → 승인·design-system 갱신 → plan → tasks → TDD 구현 → 전체 테스트 → 수렴 → 커밋. spec 변경·roadmap·어긋남 점검은 `living-spec`.
 - **spec이 현재 진실이다.** 바꿀 때는 spec을 먼저 고친다. spec과 코드는 같은 커밋에 넣는다.
 - **문서 언어:** `specs/` 아래 모든 문서는 한국어. 템플릿의 영어 절 제목은 한국어로 옮기고 원래 이름을 괄호로 남긴다(`## 기능 요구사항 (Functional Requirements)`). Spec Kit 명령이 절을 이름으로 찾기 때문이다. Given/When/Then은 `**상황** … **행동** … **결과**`. 코드·ID(`FR-001`·`SC-001`·`T001`)·파일 이름은 영어.
 - **spec에 기술 스택과 디자인 값을 쓰지 않는다.** 기술은 plan, 디자인은 `specs/design-system.md`. spec은 `## 화면`에 화면마다 보여 줄 것·할 수 있는 일만 쓴다.

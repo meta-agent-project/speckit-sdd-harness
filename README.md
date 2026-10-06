@@ -23,7 +23,7 @@ harness init [프로젝트 폴더]
 
 하는 일: `.claude/skills` · `.claude/agents` · `.specify/templates` · `.specify/scripts`를 하네스로 연결(Windows junction), `.specify/*.json` 복사, `.claude/settings.local.json`에 하네스 실제 경로로 SessionStart 훅(PC마다 다르므로 git 제외), `.gitignore`에 연결 경로 추가. 하네스 폴더를 옮겼으면 다시 실행하면 훅 경로도 바뀐다. 다시 실행해도 안전하다. 새 PC에서는 하네스를 받은 뒤 프로젝트마다 한 번 실행한다.
 
-프로젝트 전용 파일(constitution · ROADMAP · specs · wiki)은 만들지 않는다. Claude Code에서 "flow 시작"이라고 하면 없을 때 `living-spec` start가 사용자와 만든다.
+프로젝트 전용 파일(constitution · roadmap · specs · wiki)은 만들지 않는다. Claude Code에서 "flow 시작"이라고 하면 없을 때 `living-spec` start가 사용자와 만든다.
 
 ## 기능 개발 순서 (`flow`)
 
