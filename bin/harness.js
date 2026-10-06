@@ -7,7 +7,6 @@ const ROOT = fs.realpathSync(path.join(__dirname, '..'));
 
 // 프로젝트 경로 → 하네스 경로. 하네스가 원본이고 프로젝트는 연결만 한다.
 const LINKS = [
-  ['.claude/harness', '.'],
   ['.claude/skills', 'skills'],
   ['.claude/agents', 'agents'],
   ['.specify/templates', 'speckit/templates'],
@@ -17,7 +16,9 @@ const COPIES = [
   ['.specify/init-options.json', 'speckit/init-options.json'],
   ['.specify/integration.json', 'speckit/integration.json'],
 ];
-const HOOK_CMD = 'node "$CLAUDE_PROJECT_DIR/.claude/harness/bin/harness.js" rules';
+// 훅은 PC마다 다른 하네스 실제 경로를 쓰므로 git에 올리지 않는 settings.local.json에 둔다.
+const HOOK_CMD = `node "${path.join(ROOT, 'bin', 'harness.js').split(path.sep).join('/')}" rules`;
+const isHarnessHook = h => (h.command || '').endsWith('/bin/harness.js" rules');
 const IGNORE_START = '# harness (연결 — 원본은 하네스 폴더)';
 
 function isLink(p) {
@@ -47,20 +48,25 @@ function copy(project, rel, target) {
 }
 
 function addHook(project) {
-  const file = path.join(project, '.claude/settings.json');
+  const file = path.join(project, '.claude/settings.local.json');
   const settings = fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8')) : {};
-  const groups = ((settings.hooks ??= {}).SessionStart ??= []);
+  const hooks = (settings.hooks ??= {});
+  const groups = hooks.SessionStart ?? [];
   if (groups.some(g => (g.hooks || []).some(h => h.command === HOOK_CMD))) return '= SessionStart 훅';
-  groups.push({ hooks: [{ type: 'command', command: HOOK_CMD }] });
+  // 하네스 위치가 바뀌었으면 옛 경로의 훅을 빼고 새로 단다.
+  hooks.SessionStart = groups
+    .map(g => ({ ...g, hooks: (g.hooks || []).filter(h => !isHarnessHook(h)) }))
+    .filter(g => g.hooks.length);
+  hooks.SessionStart.push({ hooks: [{ type: 'command', command: HOOK_CMD }] });
   fs.writeFileSync(file, JSON.stringify(settings, null, 2) + '\n');
-  return '+ SessionStart 훅 (.claude/settings.json)';
+  return '+ SessionStart 훅 (.claude/settings.local.json)';
 }
 
 function addIgnore(project) {
   const file = path.join(project, '.gitignore');
   const text = fs.existsSync(file) ? fs.readFileSync(file, 'utf8') : '';
   if (text.includes(IGNORE_START)) return '= .gitignore';
-  const block = [IGNORE_START, ...LINKS.map(([rel]) => rel), '.specify/feature.json'].join('\n');
+  const block = [IGNORE_START, ...LINKS.map(([rel]) => rel), '.claude/settings.local.json', '.specify/feature.json'].join('\n');
   fs.writeFileSync(file, (text && !text.endsWith('\n') ? text + '\n' : text) + (text ? '\n' : '') + block + '\n');
   return '+ .gitignore';
 }
