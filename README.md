@@ -17,7 +17,7 @@ GitHub Spec Kit 중 쓰는 것만 남기고, 그 위에 기능 개발 순서(flo
 필요한 것: Git, Node.js 18 이상, Claude Code. Windows에서는 Git Bash(Spec Kit 스크립트 실행용).
 
 ```bash
-git clone https://github.com/meta-agent-project/speckit-harness.git <하네스 폴더>
+git clone https://github.com/meta-agent-project/speckit-sdd-harness.git <하네스 폴더>
 cd <하네스 폴더>
 npm link        # 선택: 어디서든 speckit-harness 명령을 쓰게 등록
 ```
