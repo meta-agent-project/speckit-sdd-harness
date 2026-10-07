@@ -1,9 +1,9 @@
 {
-  "name": "spec-harness",
+  "name": "speckit-harness",
   "version": "1.0.0",
   "private": true,
   "description": "Spec Kit 기반 개인 개발 하네스: 프로젝트에 스킬·Spec Kit 파일·규칙 훅을 연결한다",
-  "bin": { "harness": "bin/harness.js" },
+  "bin": { "speckit-harness": "bin/harness.js" },
   "files": ["bin", "rules.md", "skills", "agents", "speckit"],
   "engines": { "node": ">=18" }
 }

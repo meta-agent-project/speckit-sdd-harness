@@ -1,4 +1,4 @@
-# spec-harness
+# speckit-harness
 
 GitHub Spec Kit 중 쓰는 것만 남기고, 그 위에 기능 개발 순서(flow)·HTML 시안 고르기·TDD·living spec을 얹은 개인 개발 하네스. 어느 프로젝트에나 연결해 쓴다. 특정 프로젝트 내용은 여기 두지 않는다.
 
@@ -12,16 +12,41 @@ GitHub Spec Kit 중 쓰는 것만 남기고, 그 위에 기능 개발 순서(flo
 | `speckit/` | Spec Kit 템플릿 3개 · bash 스크립트 4개(macOS·Linux·Windows Git Bash) · `init-options.json` · `integration.json` (원본 그대로) |
 | `bin/harness.js` | 설치 CLI |
 
-## 프로젝트에 연결
+## 설치 (PC마다 한 번)
+
+필요한 것: Git, Node.js 18 이상, Claude Code. Windows에서는 Git Bash(Spec Kit 스크립트 실행용).
 
 ```bash
-npx <하네스 폴더 경로> init [프로젝트 폴더]     # 기본: 현재 폴더
-# 또는 한 번 npm link 해 두고
-cd <하네스 폴더> && npm link
-harness init [프로젝트 폴더]
+git clone https://github.com/meta-agent-project/speckit-harness.git <하네스 폴더>
+cd <하네스 폴더>
+npm link        # 선택: 어디서든 speckit-harness 명령을 쓰게 등록
 ```
 
-하는 일: `.claude/skills` · `.claude/agents` · `.specify/templates` · `.specify/scripts`를 하네스로 연결(Windows junction), `.specify/*.json` 복사, `.claude/settings.local.json`에 하네스 실제 경로로 SessionStart 훅(PC마다 다르므로 git 제외), `.gitignore`에 연결 경로 추가. 하네스 폴더를 옮겼으면 다시 실행하면 훅 경로도 바뀐다. 다시 실행해도 안전하다. 새 PC에서는 하네스를 받은 뒤 프로젝트마다 한 번 실행한다.
+프로젝트는 하네스 폴더를 직접 가리키므로, 하네스 폴더는 지우거나 옮기지 않는 고정된 위치에 둔다(예: `C:/tools/speckit-harness`). 옮겼다면 프로젝트마다 `init`을 다시 실행한다.
+
+`npm link`는 이 폴더의 `bin/harness.js`를 `speckit-harness`라는 전역 명령으로 연결만 한다(복사 아님, npm 사이트에 올리지 않음). 하지 않아도 되고, 그때는 `speckit-harness` 대신 `node <하네스 폴더>/bin/harness.js`로 실행한다.
+
+## 프로젝트에 연결 (프로젝트마다 한 번)
+
+```bash
+cd <프로젝트 폴더>
+speckit-harness init                         # npm link 한 경우
+node <하네스 폴더>/bin/harness.js init       # npm link 안 한 경우
+```
+
+연결한 뒤 그 프로젝트에서 Claude Code를 열고 "flow 시작"이라고 말한다.
+
+## 하네스 갱신
+
+```bash
+cd <하네스 폴더> && git pull
+```
+
+프로젝트는 하네스 폴더를 연결해 쓰므로 연결된 모든 프로젝트에 바로 반영된다. 다시 `init`할 필요는 없다.
+
+## init이 하는 일
+
+하는 일: `.claude/skills` · `.claude/agents` · `.specify/templates` · `.specify/scripts`를 하네스로 연결(Windows junction), `.specify/*.json` 복사, `.claude/settings.local.json`에 하네스 실제 경로로 SessionStart 훅(PC마다 다르므로 git 제외), `.gitignore`에 연결 경로 추가. 하네스 폴더를 옮겼으면 다시 실행하면 훅 경로도 바뀐다. 다시 실행해도 안전하다.
 
 프로젝트 전용 파일(constitution · roadmap · specs · wiki)은 만들지 않는다. Claude Code에서 "flow 시작"이라고 하면 없을 때 `living-spec` start가 사용자와 만든다.
 

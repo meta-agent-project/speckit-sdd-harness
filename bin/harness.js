@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// 하네스 CLI. 사용법: harness init [프로젝트 폴더] | harness rules
+// 하네스 CLI. 사용법: speckit-harness init [프로젝트 폴더] | speckit-harness rules
 const fs = require('fs');
 const path = require('path');
 
@@ -87,7 +87,7 @@ const [cmd, arg] = process.argv.slice(2);
 try {
   if (cmd === 'init') init(arg);
   else if (cmd === 'rules') process.stdout.write(fs.readFileSync(path.join(ROOT, 'rules.md'), 'utf8'));
-  else console.log('사용법:\n  harness init [프로젝트 폴더]   하네스를 프로젝트에 연결 (기본: 현재 폴더)\n  harness rules                 규칙 출력 (세션 시작 훅이 사용)');
+  else console.log('사용법:\n  speckit-harness init [프로젝트 폴더]   하네스를 프로젝트에 연결 (기본: 현재 폴더)\n  speckit-harness rules                 규칙 출력 (세션 시작 훅이 사용)');
 } catch (e) {
   console.error(`오류: ${e.message}`);
   process.exit(1);
