@@ -43,16 +43,22 @@ LLM 코딩에서 흔한 실수를 줄이기 위한 지침이다. 속도보다 �
 
 하네스 = 필요한 것만 남긴 GitHub Spec Kit + 하네스 스킬 + 이 규칙.
 - Spec Kit 명령: `speckit-specify` · `speckit-clarify` · `speckit-plan` · `speckit-tasks` · `speckit-analyze` · `speckit-implement` · `speckit-converge`. 이 명령과 `.specify/templates` · `.specify/scripts`의 내용은 고치지 않는다. 동작을 바꿀 때는 하네스 스킬에서 부르는 방식만 바꾼다.
-- 하네스 스킬: `flow`(기능 개발 순서와 승인 게이트) · `living-spec`(spec을 현재 진실로 유지: roadmap·변경·점검) · `mockup`(HTML 시안 3개 고르기) · `tdd`(테스트 규칙) · `llm-wiki`(wiki 생성).
-- 프로젝트 파일: `.specify/memory/constitution.md`(이 프로젝트 전용 원칙·기술 제약, 하네스 규칙은 넣지 않음) · `roadmap.md` · `specs/NNN-영역/` · `specs/design-system.md` · `wiki/`(자동 생성).
+- 하네스 스킬: `flow`(기능 개발 순서와 승인 게이트) · `living-spec`(spec을 현재 진실로 유지: roadmap·변경·점검) · `mockup`(용도 조립 · HTML 시안 3개 고르기) · `design-consistency`(디자인 스펙 점검: 용도 · 자리 표 · 캡처) · `tdd`(테스트 규칙 · 화면 측정) · `llm-wiki`(wiki 생성).
+- 프로젝트 파일: `.specify/memory/constitution.md`(이 프로젝트 전용 원칙·기술 제약, 하네스 규칙은 넣지 않음) · `roadmap.md` · `specs/NNN-영역/` · 디자인 스펙(`specs/design/tokens.md` · `components.md` · `roles.md` · `specs/design-system.md`) · `wiki/`(자동 생성).
 
 ## 3. 작업 방식
 
 - **항상 먼저 읽기:** `.specify/memory/constitution.md` · `roadmap.md` · `wiki/overview.md`. 화면을 다루면 `specs/design-system.md`도. 지금 작업하는 영역의 spec · plan · tasks만 더 읽는다. 아직 없으면 `living-spec` start로 만든다.
-- **기능 개발은 `flow`로 한다.** 기능 spec → 승인 → HTML 시안 → 승인·design-system 갱신 → plan → tasks → TDD 구현 → 전체 테스트 → 수렴 → 커밋. spec 변경·roadmap·어긋남 점검은 `living-spec`.
+- **기능 개발은 `flow`로 한다.** 기능 spec → 승인 → 디자인(용도 조립 · 시안 또는 변경 점검) → 승인·디자인 스펙 갱신 → plan → tasks → TDD 구현 → 전체 테스트 · 화면 측정 → 수렴 → 커밋. spec 변경·roadmap·어긋남 점검은 `living-spec`.
 - **spec이 현재 진실이다.** 바꿀 때는 spec을 먼저 고친다. spec과 코드는 같은 커밋에 넣는다.
 - **문서 언어:** `specs/` 아래 모든 문서는 한국어. 템플릿의 영어 절 제목은 한국어로 옮기고 원래 이름을 괄호로 남긴다(`## 기능 요구사항 (Functional Requirements)`). Spec Kit 명령이 절을 이름으로 찾기 때문이다. Given/When/Then은 `**상황** … **행동** … **결과**`. 코드·ID(`FR-001`·`SC-001`·`T001`)·파일 이름은 영어.
-- **spec에 기술 스택과 디자인 값을 쓰지 않는다.** 기술은 plan, 디자인은 `specs/design-system.md`. spec은 `## 화면`에 화면마다 보여 줄 것·할 수 있는 일만 쓴다.
+- **spec에 기술 스택과 디자인 값을 쓰지 않는다.** 기술은 plan, 디자인은 디자인 스펙 파일. spec은 `## 화면`에 화면마다 보여 줄 것·할 수 있는 일만 쓴다.
+- **디자인은 용도로 조립한다.** 화면의 모든 요소는 용도 하나(예: 네비게이션 · 검색 · 수정 · 화면 주요 동작 · 묶음 이름 · 상태 표시)에 속하고, 화면은 자리마다 용도를 놓아 만든다. 디자인 스펙은 네 층: 토큰(값) → 부품(모양) → 용도(용도 하나 = 부품 · 변형 · 크기 하나) → 디자인 시스템(화면 패턴 = 자리마다 용도, 자리 표, 승인 기록). 조립 규칙:
+  - 같은 용도는 어느 화면에서나 같은 부품 하나로 그린다. 화면 코드는 용도 부품을 가져다 쓴다.
+  - 여백은 담는 쪽이 정한다. 부품은 안쪽 여백만 갖는다.
+  - 한 줄은 높이 하나. 줄의 버튼 · 입력칸 · 묶음은 줄 높이를 따른다.
+  - 용도마다 긴 내용일 때의 모습(말줄임 · 줄바꿈 · 첫 줄 맞춤)을 정해 둔다.
+- **화면은 그려서 확인한다.** 화면을 만들거나 바꾸면 실제 브라우저에서 빈 상태 · 많은 항목 · 가장 긴 실제 내용으로 띄워 자리 표를 재고, 캡처를 직접 보고 고친 뒤 사용자에게 보인다(`tdd` D).
 - **TDD 필수:** 테스트 먼저, 실패 확인, 구현, 통과 확인. 상세는 `tdd`.
 - **wiki는 `llm-wiki`가 만든다.** 직접 고치지 않는다.
 

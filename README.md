@@ -7,7 +7,7 @@ GitHub Spec Kit 중 쓰는 것만 남기고, 그 위에 기능 개발 순서(flo
 | 경로 | 내용 |
 |---|---|
 | `rules.md` | 항상 적용되는 규칙. 프로젝트의 SessionStart 훅이 세션마다 주입 |
-| `skills/` | 하네스 스킬 `flow` · `living-spec` · `mockup` · `tdd` · `llm-wiki` + Spec Kit 명령 7개(`speckit-*`, 원본 그대로) |
+| `skills/` | 하네스 스킬 `flow` · `living-spec` · `mockup` · `design-consistency` · `tdd` · `llm-wiki` + Spec Kit 명령 7개(`speckit-*`, 원본 그대로) |
 | `agents/` | `technical-researcher` |
 | `speckit/` | Spec Kit 템플릿 3개 · bash 스크립트 4개(macOS·Linux·Windows Git Bash) · `init-options.json` · `integration.json` (원본 그대로) |
 | `bin/harness.js` | 설치 CLI |
@@ -52,7 +52,11 @@ cd <하네스 폴더> && git pull
 
 ## 기능 개발 순서 (`flow`)
 
-기능 spec → ①승인 → HTML 시안 3개(`mockup`) → ②승인·`specs/design-system.md` 갱신 → plan → tasks(`tdd` A) → TDD 구현(`tdd` B) → 전체 테스트(`tdd` C) → converge → wiki·커밋
+기능 spec → ①승인 → 디자인: 새 화면은 용도 조립 · HTML 시안 3개(`mockup`), 기존 화면 변경은 전/후 캡처 점검(`design-consistency` change) → ②승인·디자인 스펙 갱신 → plan → tasks(`tdd` A) → TDD 구현(`tdd` B) → 전체 테스트(`tdd` C) · 화면 측정과 캡처 자가 점검(`tdd` D) → converge → wiki·커밋
+
+## 디자인은 용도로 조립한다
+
+화면의 모든 요소는 용도 하나(네비게이션 · 검색 · 수정 · 주요 동작 …)에 속하고, 화면은 용도의 조합이다. 디자인 스펙은 네 층: `specs/design/tokens.md`(값) → `components.md`(모양) → `roles.md`(용도 하나 = 부품 · 크기 하나) → `specs/design-system.md`(화면 패턴 · 자리 표 · 승인 기록). 같은 용도는 같은 부품, 여백은 담는 쪽이, 한 줄은 높이 하나. 그려진 화면은 실제 브라우저에서 자리 표로 재고 캡처를 직접 본다.
 
 ## Spec Kit 갱신
 
