@@ -26,7 +26,8 @@ description: 하네스의 기능 개발 workflow. 영역 하나를 기능 spec �
 ## 단계
 
 ### 1. 기능 spec → 게이트① 승인
-- 새 영역: `living-spec` change의 "새 영역" 방식으로 `/speckit-specify`(폴더 이름·roadmap 행 전달). 기존 영역: `living-spec` change로 spec을 고친다.
+- 새 영역: `change`의 "새 영역" 방식으로 `/speckit-specify`(폴더 이름 · roadmap 행 · backlog의 이 영역 항목 전달). 기존 영역: `change`로 spec을 고친다.
+- `backlog.md`에 이 영역 항목이 있으면 요구사항 성격의 것은 spec에 넣는다. 항목은 3에서 지운다.
 - 모호한 점이 남으면 `/speckit-clarify`.
 - roadmap 상태 `spec 작성`.
 - **게이트①**: spec 요약(사용자 스토리 · 요구사항 수 · 화면 · 가정)을 5~10줄로 보이고 AskUserQuestion으로 승인 / 고칠 점을 받는다. 고칠 점이 있으면 고치고 다시 묻는다. 승인되면 `spec.md` 상태를 `승인됨 (Approved)`으로.

@@ -43,13 +43,14 @@ LLM 코딩에서 흔한 실수를 줄이기 위한 지침이다. 속도보다 �
 
 하네스 = 필요한 것만 남긴 GitHub Spec Kit + 하네스 스킬 + 이 규칙.
 - Spec Kit 명령: `speckit-specify` · `speckit-clarify` · `speckit-plan` · `speckit-tasks` · `speckit-analyze` · `speckit-implement` · `speckit-converge`. 이 명령과 `.specify/templates` · `.specify/scripts`의 내용은 고치지 않는다. 동작을 바꿀 때는 하네스 스킬에서 부르는 방식만 바꾼다.
-- 하네스 스킬: `flow`(기능 개발 순서와 승인 게이트) · `living-spec`(spec을 현재 진실로 유지: roadmap·변경·점검) · `mockup`(용도 조립 · HTML 시안 3개 고르기) · `design-consistency`(디자인 스펙 점검: 용도 · 자리 표 · 캡처) · `tdd`(테스트 규칙 · 화면 측정) · `llm-wiki`(wiki 생성).
+- 하네스 스킬: `flow`(기능 개발 순서와 승인 게이트) · `change`(수정 요청의 입구: roadmap · spec · backlog · 디자인 중 바뀌는 문서 판정 · 버그) · `living-spec`(roadmap 처음 작성 · 어긋남 점검) · `mockup`(용도 조립 · HTML 시안 3개 고르기) · `design-consistency`(디자인 스펙 점검: 용도 · 자리 표 · 캡처) · `tdd`(테스트 규칙 · 화면 측정) · `llm-wiki`(wiki 생성).
 - 프로젝트 파일: `.specify/memory/constitution.md`(이 프로젝트 전용 원칙·기술 제약, 하네스 규칙은 넣지 않음) · `roadmap.md` · `specs/NNN-영역/` · 디자인 스펙(`specs/design/tokens.md` · `components.md` · `roles.md` · `specs/design-system.md`) · `wiki/`(자동 생성).
 
 ## 3. 작업 방식
 
 - **항상 먼저 읽기:** `.specify/memory/constitution.md` · `roadmap.md` · `wiki/overview.md`. 화면을 다루면 `specs/design-system.md`도. 지금 작업하는 영역의 spec · plan · tasks만 더 읽는다. 아직 없으면 `living-spec` start로 만든다.
-- **기능 개발은 `flow`로 한다.** 기능 spec → 승인 → 디자인(용도 조립 · 시안 또는 변경 점검) → 승인·디자인 스펙 갱신 → plan → tasks → TDD 구현 → 전체 테스트 · 화면 측정 → 수렴 → 커밋. spec 변경·roadmap·어긋남 점검은 `living-spec`.
+- **기능 개발은 `flow`로 한다.** 기능 spec → 승인 → 디자인(용도 조립 · 시안 또는 변경 점검) → 승인·디자인 스펙 갱신 → plan → tasks → TDD 구현 → 전체 테스트 · 화면 측정 → 수렴 → 커밋.
+- **무엇이든 바꾸거나 고칠 때는 `change`로 한다.** 요구사항 · roadmap(영역 추가 · 순서 · 번호) · 디자인 변경과 버그 모두. `change`가 바뀌는 문서(roadmap · spec · backlog · 디자인 스펙)를 판정해 보이고, 뒤 영역에 미칠 영향은 backlog에 남긴다. roadmap 처음 작성과 어긋남 점검은 `living-spec`.
 - **spec이 현재 진실이다.** 바꿀 때는 spec을 먼저 고친다. spec과 코드는 같은 커밋에 넣는다.
 - **문서 언어:** `specs/` 아래 모든 문서는 한국어. 템플릿의 영어 절 제목은 한국어로 옮기고 원래 이름을 괄호로 남긴다(`## 기능 요구사항 (Functional Requirements)`). Spec Kit 명령이 절을 이름으로 찾기 때문이다. Given/When/Then은 `**상황** … **행동** … **결과**`. 코드·ID(`FR-001`·`SC-001`·`T001`)·파일 이름은 영어.
 - **spec에 기술 스택과 디자인 값을 쓰지 않는다.** 기술은 plan, 디자인은 디자인 스펙 파일. spec은 `## 화면`에 화면마다 보여 줄 것·할 수 있는 일만 쓴다.
