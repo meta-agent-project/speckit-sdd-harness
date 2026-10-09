@@ -59,6 +59,15 @@ export function preferHorizontal(code: string): string {
   return code.replace(ER_OR_STATE, (head) => `${head}\n  direction LR`);
 }
 
+// 관계 줄: <엔티티> <기호>--<기호>(또는 ..) <엔티티> : <글자>
+const ER_RELATION = /^(\s*\S+\s+\S*(?:--|\.\.)\S*\s+\S+\s*):.*$/gm;
+
+/** ER 관계선 글자(쓴다 · 팔린다 등)는 그리지 않는다(사용자가 정함) */
+export function dropRelationLabels(code: string): string {
+  if (!/^\s*erDiagram\b/.test(code)) return code;
+  return code.replace(ER_RELATION, '$1: ""');
+}
+
 /** 가로(LR · RL) → 세로(TB). 이미 세로면 그대로 */
 export function flipVertical(code: string): string {
   return code.replace(/^(\s*(?:flowchart|graph)\s+)(LR|RL)\b/m, "$1TB").replace(/^(\s*direction\s+)(LR|RL)\b/m, "$1TB");
@@ -170,7 +179,7 @@ export async function layoutDiagram(m: MermaidLike, code: string, width: number,
     }
   };
   const { title, body: raw } = stripOverrides(code);
-  const body = preferHorizontal(raw);
+  const body = preferHorizontal(dropRelationLabels(raw));
   const first = (await m.render(`${id}a`, withTitle(title, body))).svg;
   check();
   const natural = svgWidth(first);
