@@ -7,7 +7,7 @@ GitHub Spec Kit 중 쓰는 것만 남기고, 그 위에 기능 개발 순서(flo
 | 경로 | 내용 |
 |---|---|
 | `rules.md` | 항상 적용되는 규칙. 프로젝트의 SessionStart 훅이 세션마다 주입 |
-| `skills/` | 하네스 스킬 `flow` · `change` · `living-spec` · `mockup` · `design-consistency` · `tdd` · `llm-wiki` · 도식 `codelab-mermaid`(처음 한 번 그 폴더에서 `npm install && npx playwright install chromium`) + Spec Kit 명령 7개(`speckit-*`, 원본 그대로) |
+| `skills/` | 하네스 스킬 `flow` · `living-spec` · `mockup` · `design-consistency` · `tdd` · `llm-wiki` · 도식 `codelab-mermaid`(처음 한 번 그 폴더에서 `npm install && npx playwright install chromium`) + Spec Kit 명령 7개(`speckit-*`, 원본 그대로) |
 | `agents/` | `technical-researcher` |
 | `speckit/` | Spec Kit 템플릿 3개 · bash 스크립트 4개(macOS·Linux·Windows Git Bash) · `init-options.json` · `integration.json` (원본 그대로) |
 | `bin/harness.js` | 설치 CLI |

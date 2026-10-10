@@ -1,11 +1,17 @@
 ---
 name: living-spec
-description: spec을 현재 진실로 유지한다. roadmap · constitution 처음 작성(start), spec 쓰기와 고치기(update), 코드 · spec 어긋남 점검(check) 때 사용. 어느 문서까지 바뀌는지 판정과 roadmap · backlog 고치기는 change 스킬, 진행 순서와 게이트는 flow 스킬이 맡는다.
+description: 문서(roadmap · spec · backlog)를 현재 진실로 유지하는 유일한 입구. 기능 · 요구사항 · roadmap(영역 추가 · 삭제 · 순서 · 번호) · 디자인을 바꾸자는 요청, 새 영역 spec 작성, 버그 같아 보이는 요청, roadmap · constitution 처음 작성(start), 코드 · spec 어긋남 점검(check) 때 사용. 어느 문서까지 바뀌는지 스스로 찾아 고치고, 뒤 영역에 미칠 영향은 backlog에 남긴다. 진행 순서와 게이트는 flow 스킬이 맡는다.
 ---
 
 # living-spec
 
-원칙: `specs/NNN-영역/spec.md`는 이 프로그램이 지금 무엇인지만 담는다. 바꿀 때는 spec을 먼저 고친다. 이력은 git이 맡는다. 전체는 얕게, 세부는 실행 직전에 깊게. 하네스 공통 규칙은 하네스 `rules.md`를 따른다.
+원칙: `specs/NNN-영역/spec.md`는 이 프로그램이 지금 무엇인지만 담는다. 바꿀 때는 문서를 먼저 고친다. 이력은 git이 맡는다. 전체는 얕게, 세부는 실행 직전에 깊게. 하네스 공통 규칙은 하네스 `rules.md`를 따른다.
+
+문서층:
+- `roadmap.md` — 영역의 이름 · 의도 한 줄 · 순서 · 범위 밖. 상세는 쓰지 않는다.
+- `specs/NNN-영역/spec.md` — 시작한 영역의 현재 진실.
+- `backlog.md` — 아직 spec이 없는 영역에 미리 적어 두는 상세(결정 · 파급 메모). 그 영역을 시작할 때 `flow`가 입력으로 쓰고 지운다.
+- 디자인 스펙 — 값 · 부품 · 용도 · 화면 패턴. 이 스킬이 직접 고치지 않는다(아래 판정 표).
 
 ## 항상 먼저 읽기
 `.specify/memory/constitution.md` · `roadmap.md` · `wiki/overview.md` · 화면이 있는 영역이면 `specs/design-system.md`
@@ -36,16 +42,48 @@ description: spec을 현재 진실로 유지한다. roadmap · constitution 처�
 - `specs/design-system.md`가 없고 화면이 있는 제품이면 빈 틀(토큰 · 부품 · 화면 패턴 · 승인 기록 절)을 만든다.
 - 끝나면 `llm-wiki` → constitution · `roadmap.md` · `wiki/` 커밋.
 
-## update — spec 쓰기와 고치기
+## update — 문서 고치기
 
-change가 spec이 바뀐다고 판정했을 때, flow 1단계에서 부른다.
+수정 요청이 오면, 또는 flow 1단계에서 부른다. 수정 하나가 어느 문서까지 퍼지는지 사용자가 말해 주지 않아도 찾아낸다.
 
-1. 대상 폴더를 고정한다. 폴더 이름은 roadmap의 폴더 값을 그대로 쓴다. Spec Kit 명령을 부르기 전에 매번 .specify/feature.json에 {"feature_directory":"specs/<roadmap 폴더>"}를 쓴다.
-2. 새 영역이면 /speckit-specify를 부른다. SPECIFY_FEATURE_DIRECTORY=specs/<roadmap 폴더>를 명시하고, 설명에 roadmap의 그 영역 행(이름 · 의도) · 관련 범위 밖 줄 · backlog의 그 영역 항목을 넣는다. Spec Kit 명령은 roadmap · backlog를 읽지 않고, 번호 · 이름을 새로 짓게 두면 안 되기 때문이다.
-3. 기존 영역이면 spec.md 본문을 직접 고친다. 상태가 승인됨이었으면 초안으로 되돌린다. roadmap 상태가 완료였으면 spec 작성으로 바꾼다. flow 게이트①을 다시 거친다.
-4. 다른 영역 계약이 바뀌면 그 영역 spec도 같은 변경에서 고친다.
-5. 화면이 바뀌면 ## 화면에 화면마다 보여 줄 것과 할 수 있는 일을 쓴다. 하는 일이 드러나게 쓴다(예: 폴더를 골라 볼 범위를 바꾼다). mockup이 이 말로 용도를 고른다. 색 · 크기 · 배치 값은 디자인 스펙 파일에 둔다.
-6. 아래 진실 규칙으로 점검한다.
+### 1. 읽기
+`roadmap.md` · `backlog.md` · 요청이 닿는 영역의 `spec.md` · `contracts/` · 그 영역을 쓰는 뒤 영역(spec이 있으면 `spec.md`, 없으면 roadmap 행과 backlog 항목) · 화면이면 `specs/design-system.md`.
+
+### 2. 영향 판정
+요청을 아래 표에 대어 바뀌는 문서를 모두 찾는다. 한 요청이 여러 줄에 걸칠 수 있다.
+
+| 무엇이 바뀌나 | 고칠 문서 |
+|---|---|
+| 영역 추가 · 삭제 · 합침 · 나눔 · 순서 · 이름 · 의도 · 범위 밖 · 비전 · 용어 | roadmap.md (폴더 번호가 바뀌면 4의 번호 다시 매김) |
+| spec 있는 영역의 요구사항 · 화면 | 그 spec.md. roadmap은 의도 한 줄이 더는 맞지 않을 때만 |
+| spec 없는 영역의 요구사항 | 의도 한 줄이 바뀌면 roadmap, 상세는 backlog의 그 영역 항목 |
+| 다른 영역에 퍼짐, 그 영역 spec 있음 | 그 영역 spec도 같은 변경에서 |
+| 다른 영역에 퍼짐, 그 영역 spec 없음 | backlog에 그 영역 항목 |
+| 디자인 값 · 부품 · 배치 | 화면 항목은 spec ## 화면에 쓴다. 디자인 스펙은 flow 2단계(새 용도는 mockup, 기존 화면은 design-consistency change)가 게이트②를 거쳐 고친다 |
+| 문서는 맞고 코드만 다름 (버그) | 문서 없음. flow의 버그 경로로 |
+| 요청한 것이 이미 문서에 있음 | 문서 없음. 어디에 있는지(FR · 줄) 알리고 진짜 뜻을 묻는다 |
+
+- 퍼짐 찾기: 바뀌는 영역의 계약(contracts/ · data-model.md · 화면 · 용어)을 roadmap의 뒤 영역 의도와 backlog 항목에 대어 본다.
+- 의도 한 줄 · 비전 · 용어는 바뀐 뒤 그 줄을 글자 그대로 읽으면 틀린 말이 될 때만 고친다. 더 넓게 읽어서 덮이면 그대로 둔다.
+- 이미 정한 결정과 부딪히면 그 결정(파일 · 줄)을 보이고 3에서 어느 쪽인지 묻는다. 새 결정을 따르면 옛 줄은 같은 변경에서 지우거나 고쳐 쓴다.
+
+### 3. 영향 보고 · 확인
+- 문서가 바뀌면 바뀔 문서 · 파급 영역 · backlog에 적을 줄을 5~10줄로 보이고 AskUserQuestion으로 확인받는다.
+- 묻는 것은 요청의 뜻과 부딪힌 결정 중 어느 쪽인지뿐이다. 어느 문서를 고칠지는 이 스킬이 판정한다. 뜻이 여럿이면 갈래마다 바뀔 문서를 붙여 보인다.
+- 버그면 "문서 영향 없음, 버그로 고침" 한 줄만 알리고 flow의 버그 경로로 간다(게이트 없음).
+
+### 4. 적용
+- spec: 대상 폴더를 고정한다. 폴더 이름은 roadmap의 폴더 값을 그대로 쓰고, Spec Kit 명령을 부르기 전에 매번 .specify/feature.json에 {"feature_directory":"specs/<roadmap 폴더>"}를 쓴다.
+- 새 영역: roadmap에 행을 먼저 넣고 /speckit-specify를 부른다. SPECIFY_FEATURE_DIRECTORY=specs/<roadmap 폴더>를 명시하고, 설명에 roadmap의 그 영역 행(이름 · 의도) · 관련 범위 밖 줄 · backlog의 그 영역 항목을 넣는다. Spec Kit 명령은 roadmap · backlog를 읽지 않고, 번호 · 이름을 새로 짓게 두면 안 되기 때문이다.
+- 기존 영역: spec.md 본문을 직접 고친다. 상태가 승인됨이었으면 초안으로 되돌린다. roadmap 상태가 완료였으면 spec 작성으로 바꾼다. flow 게이트①을 다시 거친다.
+- 화면이 바뀌면 ## 화면에 화면마다 보여 줄 것과 할 수 있는 일을 쓴다. 하는 일이 드러나게 쓴다(예: 폴더를 골라 볼 범위를 바꾼다). mockup이 이 말로 용도를 고른다. 색 · 크기 · 배치 값은 디자인 스펙 파일에 둔다.
+- backlog 항목은 기존 모양을 따른다. 같은 영역 항목이 이미 있으면 그 아래에 더하고 줄 머리에 (YYYY-MM-DD)를 단다. 상세만 적고 spec처럼 깊게 쓰지 않는다.
+  ```markdown
+  ## <묶음> — NNN에서 할 일 (YYYY-MM-DD, <무엇을 바꿔서>)
+  - …
+  ```
+- 번호 다시 매김: 폴더 이름을 바꾸고 roadmap(영역 지도 · 작업 순서) · 모든 spec · backlog · .specify/feature.json의 폴더 참조를 함께 바꾼다. FR · SC 번호는 건드리지 않는다. 끝나면 옛 폴더 이름을 grep으로 찾아 0건(git 이력 · wiki 제외)인지 확인한다.
+- 고친 spec은 아래 진실 규칙으로 점검한다.
 
 ### 진실 규칙
 
@@ -59,10 +97,16 @@ change가 spec이 바뀐다고 판정했을 때, flow 1단계에서 부른다.
 | clarify 뒤 | /speckit-clarify를 썼으면 답마다 본문에 들어갔는지 보고 확인 사항 절을 지운다 |
 | 점검 | 고친 뒤 spec.md에서 확인 사항, 세션 숫자를 grep해 0건이다 |
 
+### 5. 다음 경로
+- spec이 바뀜 · 새 영역 → flow(게이트①부터).
+- roadmap · backlog만 바뀜 → llm-wiki → docs(roadmap): … 커밋.
+- 버그 → flow의 버그 경로.
+
 ## check — 어긋남 점검
-영역별로 spec 요구사항과 코드·테스트를 대조해 표로 보고한다: 요구사항 · 상태(구현됨 / 없음 / spec과 다름 / 테스트 없음) · 근거 파일. 진실 규칙을 어긴 곳도 함께 보고한다. 고치지 않는다. 고칠지는 사용자가 정하고, 고치면 `change`로 간다.
+영역별로 spec 요구사항과 코드·테스트를 대조해 표로 보고한다: 요구사항 · 상태(구현됨 / 없음 / spec과 다름 / 테스트 없음) · 근거 파일. 진실 규칙을 어긴 곳도 함께 보고한다. 고치지 않는다. 고칠지는 사용자가 정하고, 고치면 update로 간다.
 
 ## 하지 않는 것
 - wiki를 손으로 고치지 않는다.
 - spec에 기술 스택이나 디자인 값을 쓰지 않는다.
-- 시작 전 영역의 spec을 미리 깊게 쓰지 않는다. 뒤 영역 상세는 change가 backlog에 적는다.
+- roadmap에 요구사항 · 기술 · 상세를 쓰지 않는다.
+- 뒤 영역의 spec을 미리 쓰지 않는다. backlog에만 적는다.
