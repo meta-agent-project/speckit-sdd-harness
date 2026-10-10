@@ -1,6 +1,6 @@
 # speckit-harness
 
-GitHub Spec Kit 중 쓰는 것만 남기고, 그 위에 기능 개발 순서(flow)·HTML 시안 고르기·TDD·living spec을 얹은 개인 개발 하네스. 어느 프로젝트에나 연결해 쓴다. 특정 프로젝트 내용은 여기 두지 않는다.
+GitHub Spec Kit 중 쓰는 것만 남기고, 그 위에 기능 개발 순서(flow)·HTML 시안 고르기·TDD·living spec(spec에는 지금 진실만)을 얹은 개인 개발 하네스. 어느 프로젝트에나 연결해 쓴다. 특정 프로젝트 내용은 여기 두지 않는다.
 
 ## 구조
 

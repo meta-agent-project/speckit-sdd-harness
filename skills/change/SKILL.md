@@ -1,6 +1,6 @@
 ---
 name: change
-description: 수정 요청의 입구. 기능 · 요구사항 · roadmap(영역 추가 · 삭제 · 순서 · 번호) · 디자인을 바꾸자는 요청, 버그 같아 보이는 요청, 새 영역 spec 작성 때 사용. 어느 문서(roadmap · spec · backlog · 디자인 스펙)까지 바뀌는지 스스로 찾아 고치고, 뒤 영역에 미칠 영향은 backlog에 남긴다. 진행 순서와 게이트는 flow 스킬이 맡는다.
+description: 수정 요청의 입구. 기능 · 요구사항 · roadmap(영역 추가 · 삭제 · 순서 · 번호) · 디자인을 바꾸자는 요청, 버그 같아 보이는 요청 때 사용. 어느 문서(roadmap · spec · backlog · 디자인 스펙)까지 바뀌는지 스스로 판정해 roadmap · backlog를 고치고, spec은 living-spec update에 맡기며, 뒤 영역에 미칠 영향은 backlog에 남긴다. 진행 순서와 게이트는 flow 스킬이 맡는다.
 ---
 
 # change
@@ -9,7 +9,7 @@ description: 수정 요청의 입구. 기능 · 요구사항 · roadmap(영역 �
 
 문서층:
 - `roadmap.md` — 영역의 이름 · 의도 한 줄 · 순서 · 범위 밖. 상세는 쓰지 않는다.
-- `specs/NNN-영역/spec.md` — 시작한 영역의 현재 진실.
+- `specs/NNN-영역/spec.md` — 시작한 영역의 현재 진실. 쓰고 고치는 일은 `living-spec` update.
 - `backlog.md` — 아직 spec이 없는 영역에 미리 적어 두는 상세(결정 · 파급 메모). 그 영역을 시작할 때 `flow`가 입력으로 쓰고 지운다.
 - 디자인 스펙 — 값 · 부품 · 용도 · 화면 패턴.
 
@@ -42,8 +42,7 @@ description: 수정 요청의 입구. 기능 · 요구사항 · roadmap(영역 �
 - 버그면: "문서 영향 없음 — 버그로 고침" 한 줄만 알리고 바로 5로 간다(게이트 없음).
 
 ## 4. 적용
-- **spec 있는 영역:** `spec.md`를 직접 고치거나 `/speckit-clarify`. 상태가 `승인됨`이었으면 `초안`으로 되돌린다(flow 게이트①을 다시 거친다). roadmap 상태가 `완료`였으면 `spec 작성`으로 바꾼다 — `flow`가 그 영역을 다시 연다. 화면이 바뀌면 `## 화면`에 화면마다 보여 줄 것 · 할 수 있는 일을 하는 일이 드러나게 쓴다(예: "폴더를 골라 볼 범위를 바꾼다") — `mockup`이 이 말로 용도를 고른다. 색 · 크기 · 배치 값은 디자인 스펙 파일에 둔다.
-- **새 영역:** roadmap에 행을 넣은 뒤 `.specify/feature.json`에 `{"feature_directory":"specs/<roadmap 폴더>"}`를 쓰고, `/speckit-specify`를 부를 때 `SPECIFY_FEATURE_DIRECTORY=specs/<roadmap 폴더>`를 명시한다. 설명에 roadmap의 그 영역 행(이름 · 의도), 관련 "범위 밖" 줄, backlog의 그 영역 항목을 함께 넣는다. Spec Kit 명령은 roadmap · backlog를 읽지 않고, 번호 · 이름을 새로 짓게 두면 안 되기 때문이다.
+- spec 있는 영역 · 새 영역: spec은 `living-spec` update가 쓰고 고친다. 새 영역이면 roadmap에 행을 먼저 넣는다.
 - **backlog 항목:** 기존 backlog 모양을 따른다.
   ```markdown
   ## <묶음> — NNN에서 할 일 (YYYY-MM-DD, <무엇을 바꿔서>)
@@ -61,3 +60,4 @@ description: 수정 요청의 입구. 기능 · 요구사항 · roadmap(영역 �
 - 뒤 영역의 spec을 미리 쓰지 않는다. backlog에만 적는다.
 - roadmap에 요구사항 · 기술 · 상세를 쓰지 않는다.
 - spec에 기술 스택이나 디자인 값을 쓰지 않는다.
+- spec을 직접 고치지 않는다. 고칠 때는 `living-spec` update의 진실 규칙을 따른다.
