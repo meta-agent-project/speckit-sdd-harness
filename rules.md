@@ -43,7 +43,7 @@ LLM 코딩에서 흔한 실수를 줄이기 위한 지침이다. 속도보다 �
 
 하네스 = 필요한 것만 남긴 GitHub Spec Kit + 하네스 스킬 + 이 규칙.
 - Spec Kit 명령: `speckit-specify` · `speckit-clarify` · `speckit-plan` · `speckit-tasks` · `speckit-analyze` · `speckit-implement` · `speckit-converge`. 이 명령과 `.specify/templates` · `.specify/scripts`의 내용은 고치지 않는다. 동작을 바꿀 때는 하네스 스킬에서 부르는 방식만 바꾼다.
-- 하네스 스킬: `flow`(기능 개발 순서와 승인 게이트) · `living-spec`(문서를 현재 진실로 유지하는 유일한 입구: 바뀌는 문서 판정 · roadmap · spec · backlog 고치기 · roadmap 처음 작성 · 어긋남 점검) · `mockup`(용도 조립 · HTML 시안 3개 고르기) · `design-consistency`(디자인 스펙 점검: 용도 · 자리 표 · 캡처) · `tdd`(테스트 규칙 · 화면 측정) · `llm-wiki`(wiki 생성).
+- 하네스 스킬: `flow`(기능 개발 순서와 승인 게이트) · `living-spec`(문서를 현재 진실로 유지하는 유일한 입구: 바뀌는 문서 판정 · roadmap · spec · backlog 고치기 · roadmap 처음 작성 · 어긋남 점검) · `mockup`(용도 조립 · HTML 시안 3개 고르기) · `design-consistency`(디자인 스펙 점검: 용도 · 자리 표 · 캡처) · `tdd`(테스트 규칙 · 화면 측정) · `llm-wiki`(wiki 생성) · `figure-style`(설명 그림·생성형 실행 예시에 승인 화풍 PNG 2장을 실제 첨부하고, 한 번 준비→생성→점검하며 핵심 오류와 화풍 경고를 구별).
 - 프로젝트 파일: `.specify/memory/constitution.md`(이 프로젝트 전용 원칙·기술 제약, 하네스 규칙은 넣지 않음) · `roadmap.md` · `specs/NNN-영역/` · 디자인 스펙(`specs/design/tokens.md` · `components.md` · `roles.md` · `specs/design-system.md`) · `wiki/`(자동 생성).
 
 ## 3. 작업 방식
@@ -65,6 +65,8 @@ LLM 코딩에서 흔한 실수를 줄이기 위한 지침이다. 속도보다 �
 - **AI가 만드는 결과물은 규칙 말고 도구 · 선호로.** AI가 쓰는 그림 · 장면 · 글의 품질은 요청 글 규칙을 늘려 올리지 않는다(규칙이 쌓이면 AI가 규칙에 맞추느라 결과가 망가진다). 사람이 정한 값은 토큰 · 엔진 · 도구 능력으로 두고 AI는 쓸지만 정한다. 요청 글에는 사람이 좋아했던 것을 조건 붙인 긍정문 서너 줄로만 적고 수치 · 금지문은 넣지 않는다. 기계 점검은 실제로 나온 문제에만 더한다. 선호가 맞지 않는 반대 예를 비교에 넣어 과적합을 시험으로 막는다. 위 자리 표 기준은 앱 화면에, 이 원칙은 AI 결과물에 쓴다. 사용자가 "규칙 말고 도구 · 선호로" · "과적합 안 되게"라고 하면 이 원칙이다.
 - **TDD 필수:** 테스트 먼저, 실패 확인, 구현, 통과 확인. 상세는 `tdd`.
 - **wiki는 `llm-wiki`가 만든다.** 직접 고치지 않는다.
+
+- **생성형 그림 기본**: 화풍은 figure-style 승인 guide·structure.png·assembly.png가 주인이다. 여러 구조 강조색을 허용한다. 준비는 장+최종 요청 한 번, 검색은 명시적 찾기만, 핵심 오류 재생성은 최대1회다. 점검 불가는 PNG를 보존하고 점검만 재시도한다. 앱 실행 결과 예시는 실제 실행 안 함을 표시하고 예제·설치·DB·서버를 실행하지 않는다. 기존·수동 이미지는 보존한다.
 
 ## 4. 대화창 출력
 
