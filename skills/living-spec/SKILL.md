@@ -1,6 +1,6 @@
 ---
 name: living-spec
-description: 문서(roadmap · spec · backlog)를 현재 진실로 유지하는 유일한 입구. 기능 · 요구사항 · roadmap(영역 추가 · 삭제 · 순서 · 번호) · 디자인을 바꾸자는 요청, 새 영역 spec 작성, 버그 같아 보이는 요청, roadmap · constitution 처음 작성(start), 코드 · spec 어긋남 점검(check) 때 사용. 어느 문서까지 바뀌는지 스스로 찾아 고치고, 뒤 영역에 미칠 영향은 backlog에 남긴다. 진행 순서와 게이트는 flow 스킬이 맡는다.
+description: 문서(roadmap · spec · backlog)를 현재 진실로 유지하는 유일한 입구. 기능 · 요구사항 · roadmap(영역 추가 · 삭제 · 순서 · 번호) · 디자인을 바꾸자는 요청, 새 영역 spec 작성, roadmap · constitution 처음 작성(start), 코드 · spec 어긋남 점검(check) 때 사용. 어느 문서까지 바뀌는지 스스로 찾아 고치고, 뒤 영역에 미칠 영향은 backlog에 남긴다. 진행 순서와 게이트는 flow 스킬이 맡는다.
 ---
 
 # living-spec
@@ -60,7 +60,7 @@ description: 문서(roadmap · spec · backlog)를 현재 진실로 유지하는
 | 다른 영역에 퍼짐, 그 영역 spec 있음 | 그 영역 spec도 같은 변경에서 |
 | 다른 영역에 퍼짐, 그 영역 spec 없음 | backlog에 그 영역 항목 |
 | 디자인 값 · 부품 · 배치 | 화면 항목은 spec ## 화면에 쓴다. 디자인 스펙은 flow 2단계(새 용도는 mockup, 기존 화면은 design-consistency change)가 게이트②를 거쳐 고친다 |
-| 문서는 맞고 코드만 다름 (버그) | 문서 없음. flow의 버그 경로로 |
+| 버그 | 판정하지 않고 `bugfix`로. spec 몇 줄 수정도 `bugfix`가 한다 |
 | 요청한 것이 이미 문서에 있음 | 문서 없음. 어디에 있는지(FR · 줄) 알리고 진짜 뜻을 묻는다 |
 
 - 퍼짐 찾기: 바뀌는 영역의 계약(contracts/ · data-model.md · 화면 · 용어)을 roadmap의 뒤 영역 의도와 backlog 항목에 대어 본다.
@@ -70,7 +70,6 @@ description: 문서(roadmap · spec · backlog)를 현재 진실로 유지하는
 ### 3. 영향 보고 · 확인
 - 문서가 바뀌면 바뀔 문서 · 파급 영역 · backlog에 적을 줄을 5~10줄로 보이고 AskUserQuestion으로 확인받는다.
 - 묻는 것은 요청의 뜻과 부딪힌 결정 중 어느 쪽인지뿐이다. 어느 문서를 고칠지는 이 스킬이 판정한다. 뜻이 여럿이면 갈래마다 바뀔 문서를 붙여 보인다.
-- 버그면 "문서 영향 없음, 버그로 고침" 한 줄만 알리고 flow의 버그 경로로 간다(게이트 없음).
 
 ### 4. 적용
 - spec: 대상 폴더를 고정한다. 폴더 이름은 roadmap의 폴더 값을 그대로 쓰고, Spec Kit 명령을 부르기 전에 매번 .specify/feature.json에 {"feature_directory":"specs/<roadmap 폴더>"}를 쓴다.
@@ -100,7 +99,7 @@ description: 문서(roadmap · spec · backlog)를 현재 진실로 유지하는
 ### 5. 다음 경로
 - spec이 바뀜 · 새 영역 → flow(게이트①부터).
 - roadmap · backlog만 바뀜 → llm-wiki → docs(roadmap): … 커밋.
-- 버그 → flow의 버그 경로.
+- `bugfix`가 넘긴 요청(요구사항 자체가 바뀜) → flow(게이트①부터). 버그 수정 자체는 `bugfix`가 마친다.
 
 ## check — 어긋남 점검
 영역별로 spec 요구사항과 코드·테스트를 대조해 표로 보고한다: 요구사항 · 상태(구현됨 / 없음 / spec과 다름 / 테스트 없음) · 근거 파일. 진실 규칙을 어긴 곳도 함께 보고한다. 고치지 않는다. 고칠지는 사용자가 정하고, 고치면 update로 간다.
