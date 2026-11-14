@@ -43,7 +43,7 @@ LLM 코딩에서 흔한 실수를 줄이기 위한 지침이다. 속도보다 �
 
 하네스 = 필요한 것만 남긴 GitHub Spec Kit + 하네스 스킬 + 이 규칙.
 - Spec Kit 명령: `speckit-specify` · `speckit-clarify` · `speckit-plan` · `speckit-tasks` · `speckit-analyze` · `speckit-implement` · `speckit-converge`. 이 명령과 `.specify/templates` · `.specify/scripts`의 내용은 고치지 않는다. 동작을 바꿀 때는 하네스 스킬에서 부르는 방식만 바꾼다.
-- 하네스 스킬: `flow`(기능 개발 순서와 승인 게이트) · `living-spec`(문서를 현재 진실로 유지하는 유일한 입구: 바뀌는 문서 판정 · roadmap · spec · backlog 고치기 · roadmap 처음 작성 · 어긋남 점검) · `mockup`(용도 조립 · HTML 시안 3개 고르기) · `design-consistency`(디자인 스펙 점검: 용도 · 자리 표 · 캡처) · `tdd`(테스트 규칙 · 화면 측정) · `bugfix`(버그 수정의 하나뿐인 입구: 원인 찾기 → spec 먼저 → 재현 테스트 → 수정) · `llm-wiki`(wiki 생성, 사용자가 부를 때만) · `figure-style`(설명 그림·생성형 실행 예시에 승인 화풍 PNG 2장을 실제 첨부하고, 한 번 준비→생성→점검하며 핵심 오류와 화풍 경고를 구별).
+- 하네스 스킬: `flow`(기능 개발 순서와 승인 게이트) · `flow-all`(여러 영역을 동시에: spec · 시안만 승인받고 승인된 영역은 묻지 않고 끝까지) · `living-spec`(문서를 현재 진실로 유지하는 유일한 입구: 바뀌는 문서 판정 · roadmap · spec · backlog 고치기 · roadmap 처음 작성 · 어긋남 점검) · `mockup`(용도 조립 · HTML 시안 3개 고르기) · `design-consistency`(디자인 스펙 점검: 용도 · 자리 표 · 캡처) · `tdd`(테스트 규칙 · 화면 측정) · `bugfix`(버그 수정의 하나뿐인 입구: 원인 찾기 → spec 먼저 → 재현 테스트 → 수정) · `llm-wiki`(wiki 생성, 사용자가 부를 때만) · `figure-style`(설명 그림·생성형 실행 예시에 승인 화풍 PNG 2장을 실제 첨부하고, 한 번 준비→생성→점검하며 핵심 오류와 화풍 경고를 구별).
 - 프로젝트 파일: `.specify/memory/constitution.md`(이 프로젝트 전용 원칙·기술 제약, 하네스 규칙은 넣지 않음) · `roadmap.md` · `specs/NNN-영역/` · 디자인 스펙(`specs/design/tokens.md` · `components.md` · `roles.md` · `specs/design-system.md`) · `wiki/`(자동 생성).
 
 ## 3. 작업 방식
