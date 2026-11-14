@@ -6,6 +6,7 @@
 
 | 날짜 | 변경 내용 | 대상 | 사유 |
 |---|---|---|---|
+| 2026-11-14 | flow-all 스킬 추가. 여러 영역을 동시에 돌리고 spec · 화면 시안만 승인받으며 승인된 영역은 plan부터 합치기까지 묻지 않는다 | `skills/flow-all`, `rules.md`, `README.md` | spec은 대화로 승인하되 그 뒤 plan · tasks · 구현은 승인 없이 한 번에 끝까지 해 달라는 사용자 요청 |
 | 2026-11-14 | wiki는 사용자가 llm-wiki를 직접 부를 때만 만든다. flow 마무리 · living-spec start · update · bugfix에서 저절로 부르던 것을 빼고 항상 먼저 읽기에서 wiki/overview.md를 뺐다 | `skills/llm-wiki`, `skills/flow`, `skills/living-spec`, `skills/bugfix`, `rules.md`, `README.md` | 개발이 끝날 때마다 wiki가 돌아서, 명시적으로 부를 때만 돌게 해 달라는 사용자 요청 |
 | 2026-10-27 | 구조·포함 관계 그림만 색 테두리·이름표, 장면·비유·과정 그림은 둘째 견본처럼 흑백. 도구 화면도 생성형으로 그리고 표시를 남김 | `skills/figure-style`, 강의프로그램 앱의 `skill.figure-style` | 색이 필요 없는 그림에도 테두리 색이 들어가서, 견본 두 장(색 있음·없음)의 쓰임대로 나눠 달라는 사용자 요청 |
 | 2026-10-26 | 전역 스타일의 적용 범위·선택자 충돌 추적과 실행 환경별 배치 검증 추가. 코드 블록의 줄 번호·본문 정렬을 측정 예시로 명시 | `skills/design-consistency`, `skills/tdd` | 책과 슬라이드의 같은 클래스 이름으로 세로 배치가 섞인 문제를 분석해, 독립 문서 검사와 앱 내 화면 검증의 차이를 반영함 |
