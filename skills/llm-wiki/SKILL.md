@@ -1,11 +1,12 @@
 ---
 name: llm-wiki
-description: project/wiki/를 roadmap.md와 specs/ 전체에서 다시 만든다. spec·plan·data-model이 바뀐 뒤, converge 뒤, 또는 "wiki 갱신" 요청 때 사용.
+description: project/wiki/를 roadmap.md와 specs/ 전체에서 다시 만든다. 사용자가 "wiki 갱신", "llm-wiki"로 직접 부를 때만 사용. flow · living-spec · bugfix가 저절로 부르지 않는다.
 ---
 
 # llm-wiki
 
 wiki는 원본에서 만든 결과물이다. 손으로 고치지 않고 매번 통째로 다시 쓴다.
+사용자가 부를 때만 만든다. 그래서 마지막으로 만든 뒤 원본이 바뀌었을 수 있다. wiki와 원본이 다르면 원본이 맞다.
 
 ## 읽는 원본
 - `roadmap.md`
@@ -32,4 +33,4 @@ wiki는 원본에서 만든 결과물이다. 손으로 고치지 않고 매번 �
 - 중복을 직접 합치지 않는다. 각 사실의 주인(영역 spec, `specs/design-system.md`)에 링크하고, 서로 다르면 "충돌"로 적어 사람이 원본을 고치게 한다.
 - 한국어로 쓴다.
 - 다 쓰면 6개 파일 모두 헤더가 있는지 확인한다.
-- 커밋은 부른 쪽(사용자 · flow · living-spec)이 한다.
+- 다 쓰면 wiki/ 만 커밋한다: docs(wiki): 갱신.

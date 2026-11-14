@@ -52,5 +52,4 @@ spec이 바뀌면 spec을 먼저 고치고 코드는 그 뒤에 고친다.
 ## 6. 커밋
 
 - spec · 코드 · 테스트를 커밋 하나로 넣는다: fix(NNN-영역): …
-- spec · contracts · data-model이 바뀌었으면 llm-wiki로 wiki를 갱신해 같이 넣는다.
 - 원인 · 고친 spec 줄 · 테스트 결과 · 남은 위험을 5줄 안으로 보고한다.

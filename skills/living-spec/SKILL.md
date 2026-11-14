@@ -14,7 +14,7 @@ description: 문서(roadmap · spec · backlog)를 현재 진실로 유지하는
 - 디자인 스펙 — 값 · 부품 · 용도 · 화면 패턴. 이 스킬이 직접 고치지 않는다(아래 판정 표).
 
 ## 항상 먼저 읽기
-`.specify/memory/constitution.md` · `roadmap.md` · `wiki/overview.md` · 화면이 있는 영역이면 `specs/design-system.md`
+`.specify/memory/constitution.md` · `roadmap.md` · 화면이 있는 영역이면 `specs/design-system.md`
 
 ## start — roadmap 처음 작성
 사용자와 한 번에 하나씩 묻고 `roadmap.md`를 쓴다.
@@ -40,7 +40,7 @@ description: 문서(roadmap · spec · backlog)를 현재 진실로 유지하는
 - 상태 값: 예정 · spec 작성 · 진행 중 · 완료.
 - 프로젝트에 `.specify/memory/constitution.md`가 없으면 먼저 사용자와 만든다: 원칙 몇 줄과 `## 기술 제약`(플랫폼·언어·프레임워크 등 모든 plan이 따를 것). 머리에 `**Version**: 1.0.0 | **Ratified**: <오늘> | **Last Amended**: <오늘>`. 하네스 규칙은 넣지 않는다.
 - `specs/design-system.md`가 없고 화면이 있는 제품이면 빈 틀(토큰 · 부품 · 화면 패턴 · 승인 기록 절)을 만든다.
-- 끝나면 `llm-wiki` → constitution · `roadmap.md` · `wiki/` 커밋.
+- 끝나면 constitution · `roadmap.md` 커밋.
 
 ## update — 문서 고치기
 
@@ -98,7 +98,7 @@ description: 문서(roadmap · spec · backlog)를 현재 진실로 유지하는
 
 ### 5. 다음 경로
 - spec이 바뀜 · 새 영역 → flow(게이트①부터).
-- roadmap · backlog만 바뀜 → llm-wiki → docs(roadmap): … 커밋.
+- roadmap · backlog만 바뀜 → docs(roadmap): … 커밋.
 - `bugfix`가 넘긴 요청(요구사항 자체가 바뀜) → flow(게이트①부터). 버그 수정 자체는 `bugfix`가 마친다.
 
 ## check — 어긋남 점검

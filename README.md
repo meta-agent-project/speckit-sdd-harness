@@ -52,7 +52,7 @@ cd <하네스 폴더> && git pull
 
 ## 기능 개발 순서 (`flow`)
 
-기능 spec → ①승인 → 디자인: 새 화면은 용도 조립 · HTML 시안 3개(`mockup`), 기존 화면 변경은 전/후 캡처 점검(`design-consistency` change) → ②승인·디자인 스펙 갱신 → plan → tasks(`tdd` A) → TDD 구현(`tdd` B) → 전체 테스트(`tdd` C) · 화면 측정과 캡처 자가 점검(`tdd` D) → converge → wiki·커밋
+기능 spec → ①승인 → 디자인: 새 화면은 용도 조립 · HTML 시안 3개(`mockup`), 기존 화면 변경은 전/후 캡처 점검(`design-consistency` change) → ②승인·디자인 스펙 갱신 → plan → tasks(`tdd` A) → TDD 구현(`tdd` B) → 전체 테스트(`tdd` C) · 화면 측정과 캡처 자가 점검(`tdd` D) → converge → 커밋 (wiki는 사용자가 `llm-wiki`를 부를 때만)
 
 ## 디자인은 용도로 조립한다
 

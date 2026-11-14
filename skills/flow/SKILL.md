@@ -66,7 +66,7 @@ description: 하네스의 기능 개발 workflow. 영역 하나를 기능 spec �
 - `/speckit-converge`. 남은 작업이 추가되면 5로. "Converged"까지 반복.
 
 ### 8. 마무리
-- roadmap 상태 `완료` → `llm-wiki` → spec · plan · tasks · 코드 · 테스트 · roadmap · design-system · wiki를 **커밋 하나**로.
+- roadmap 상태 `완료` → spec · plan · tasks · 코드 · 테스트 · roadmap · design-system을 **커밋 하나**로. wiki는 사용자가 `llm-wiki`를 부를 때만 갱신한다.
 - 무엇을 만들었는지, 테스트 결과, 남은 위험을 5~10줄로 보고한다.
 
 ## 버그
