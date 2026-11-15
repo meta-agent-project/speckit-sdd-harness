@@ -1,6 +1,6 @@
 ---
 name: living-spec
-description: 문서(roadmap · spec · backlog)를 현재 진실로 유지하는 유일한 입구. 기능 · 요구사항 · roadmap(영역 추가 · 삭제 · 순서 · 번호) · 디자인을 바꾸자는 요청, 새 영역 spec 작성, roadmap · constitution 처음 작성(start), 코드 · spec 어긋남 점검(check) 때 사용. 어느 문서까지 바뀌는지 스스로 찾아 고치고, 뒤 영역에 미칠 영향은 backlog에 남긴다. 진행 순서와 게이트는 flow 스킬이 맡는다.
+description: 문서(roadmap · spec · backlog)를 현재 진실로 유지하는 유일한 입구이자 요구사항이 바뀔 때의 입구(이미 완료된 영역 포함). 기능 · 요구사항 · roadmap(영역 추가 · 삭제 · 순서 · 번호) · 디자인을 바꾸자는 요청, 새 영역 spec 작성, roadmap · constitution 처음 작성(start), 코드 · spec 어긋남 점검(check) 때 사용. 어느 문서까지 바뀌는지 스스로 찾아 고치고, 뒤 영역에 미칠 영향은 backlog에 남긴다. 진행 순서와 게이트는 flow 스킬이 맡는다.
 ---
 
 # living-spec
@@ -60,7 +60,7 @@ description: 문서(roadmap · spec · backlog)를 현재 진실로 유지하는
 | 다른 영역에 퍼짐, 그 영역 spec 있음 | 그 영역 spec도 같은 변경에서 |
 | 다른 영역에 퍼짐, 그 영역 spec 없음 | backlog에 그 영역 항목 |
 | 디자인 값 · 부품 · 배치 | 화면 항목은 spec ## 화면에 쓴다. 디자인 스펙은 flow 2단계(새 용도는 mockup, 기존 화면은 design-consistency change)가 게이트②를 거쳐 고친다 |
-| 버그 | 판정하지 않고 `bugfix`로. spec 몇 줄 수정도 `bugfix`가 한다 |
+| 버그(정해진 요구사항대로 돌아가지 않음) | 판정하지 않고 `bugfix`로. 버그가 드러낸 spec 빈틈도 `bugfix`가 고친다. 원하는 동작이 달라지면 버그가 아니고 이 표의 다른 줄이다 |
 | 요청한 것이 이미 문서에 있음 | 문서 없음. 어디에 있는지(FR · 줄) 알리고 진짜 뜻을 묻는다 |
 
 - 퍼짐 찾기: 바뀌는 영역의 계약(contracts/ · data-model.md · 화면 · 용어)을 roadmap의 뒤 영역 의도와 backlog 항목에 대어 본다.

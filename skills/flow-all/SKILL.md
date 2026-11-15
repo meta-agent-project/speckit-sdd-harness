@@ -12,7 +12,9 @@ description: 여러 영역을 flow 순서대로 동시에 끝까지 돌린다. �
 ## 시작
 
 - constitution, roadmap, 프로젝트 CLAUDE.md 를 읽는다
-- 동시 수, 모델 역할, 자원 규칙, 합치기 · 배포 규칙은 프로젝트 CLAUDE.md 를 따른다. 없으면 동시 3개다
+- 구현 담당과 모델은 rules.md "구현은 서브에이전트가 하고 메인은 지휘한다"를 따른다. 구현은 implementer 에게 맡긴다
+- 동시에 몇 개를 돌릴지와 무거운 명령은 rules.md "서브에이전트 동시 실행"(의존 · CPU · heavy · worktree)을 따른다
+- 배포 규칙은 프로젝트 CLAUDE.md 나 AGENTS.md 를 따른다
 - roadmap 영역마다 flow 의 진행 상태 표로 지금 단계를 판정한다
 - 영역 · 단계 · 다음 일 표를 보이고, 몇 영역을 돌리고 몇 영역이 승인을 기다리는지 한 줄로 알린다
 
@@ -39,8 +41,8 @@ flow 3 ~ 8 의 규칙은 그대로다. 한국어 문서, tdd A ~ D, converge, �
 - 문서 단계(plan · tasks · analyze)는 같은 작업 폴더에서 돌린다. Spec Kit 명령마다 SPECIFY_FEATURE_DIRECTORY=specs/<폴더> 를 붙이고 .specify/feature.json 은 믿지 않는다
 - 기존 영역의 tasks 를 다시 만들기 전에 커밋한다(flow 4)
 - 구현은 영역마다 따로 worktree 에서 한다. 갈래 이름은 영역 폴더 이름이다
-- 영역의 tdd C · D 와 converge 가 통과하면 합치기 담당이 master 에 합치고 전체 테스트를 다시 돌린다. 실패하면 그 영역 구현 에이전트에게 돌려보낸다
-- 측정은 한 번에 하나만 돈다
+- 영역의 tdd C · D 와 converge 가 통과하면 메인이 master 에 합치고 전체 테스트를 heavy 로 다시 돌린다. 실패하면 그 영역 implementer 에게 돌려보낸다
+- 측정 · 빌드 · 전체 테스트는 heavy 로 돌려 한 번에 하나만 돈다
 - 메인은 지시문을 쓰고 결과 보고와 검증 출력을 직접 확인한다. 지시문에는 영역 폴더, 할 일 번호, 끝 기준, 자원 규칙을 넣는다
 - plan 의 기술 결정은 묻지 않고 영역 끝 보고에 적는다
 
@@ -63,4 +65,4 @@ flow 3 ~ 8 의 규칙은 그대로다. 한국어 문서, tdd A ~ D, converge, �
 
 - spec 승인과 시안 고르기를 추측하지 않는다
 - 자동 갈래에서 승인을 묻지 않는다
-- 동시 수를 넘기지 않는다
+- CPU 80 이상일 때 새 묶음을 내보내지 않는다

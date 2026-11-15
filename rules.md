@@ -44,14 +44,28 @@ LLM 코딩에서 흔한 실수를 줄이기 위한 지침이다. 속도보다 �
 하네스 = 필요한 것만 남긴 GitHub Spec Kit + 하네스 스킬 + 이 규칙.
 - Spec Kit 명령: `speckit-specify` · `speckit-clarify` · `speckit-plan` · `speckit-tasks` · `speckit-analyze` · `speckit-implement` · `speckit-converge`. 이 명령과 `.specify/templates` · `.specify/scripts`의 내용은 고치지 않는다. 동작을 바꿀 때는 하네스 스킬에서 부르는 방식만 바꾼다.
 - 하네스 스킬: `flow`(기능 개발 순서와 승인 게이트) · `flow-all`(여러 영역을 동시에: spec · 시안만 승인받고 승인된 영역은 묻지 않고 끝까지) · `living-spec`(문서를 현재 진실로 유지하는 유일한 입구: 바뀌는 문서 판정 · roadmap · spec · backlog 고치기 · roadmap 처음 작성 · 어긋남 점검) · `mockup`(용도 조립 · HTML 시안 3개 고르기) · `design-consistency`(디자인 스펙 점검: 용도 · 자리 표 · 캡처) · `tdd`(테스트 규칙 · 화면 측정) · `bugfix`(버그 수정의 하나뿐인 입구: 원인 찾기 → spec 먼저 → 재현 테스트 → 수정) · `llm-wiki`(wiki 생성, 사용자가 부를 때만) · `figure-style`(설명 그림·생성형 실행 예시에 승인 화풍 PNG 2장을 실제 첨부하고, 한 번 준비→생성→점검하며 핵심 오류와 화풍 경고를 구별).
+- 하네스 에이전트: `implementer`(코드 작업 담당, 기본 Opus · 단순한 묶음은 Sonnet) · `technical-researcher`(기술 조사).
 - 프로젝트 파일: `.specify/memory/constitution.md`(이 프로젝트 전용 원칙·기술 제약, 하네스 규칙은 넣지 않음) · `roadmap.md` · `specs/NNN-영역/` · 디자인 스펙(`specs/design/tokens.md` · `components.md` · `roles.md` · `specs/design-system.md`) · `wiki/`(자동 생성).
 
 ## 3. 작업 방식
 
 - **항상 먼저 읽기:** `.specify/memory/constitution.md` · `roadmap.md`. 화면을 다루면 `specs/design-system.md`도. 지금 작업하는 영역의 spec · plan · tasks만 더 읽는다. 아직 없으면 `living-spec` start로 만든다.
 - **기능 개발은 `flow`로 한다.** 기능 spec → 승인 → 디자인(용도 조립 · 시안 또는 변경 점검) → 승인·디자인 스펙 갱신 → plan → tasks → TDD 구현 → 전체 테스트 · 화면 측정 → 수렴 → 커밋.
-- **무엇이든 바꾸거나 고칠 때는 `living-spec` update로 한다.** 요구사항 · roadmap(영역 추가 · 순서 · 번호) · 디자인 변경 모두. 바뀌는 문서(roadmap · spec · backlog · 디자인 스펙)를 판정해 보이고, 뒤 영역에 미칠 영향은 backlog에 남긴다.
-- **버그는 `bugfix`로 고친다.** 원인을 먼저 찾고, spec이 틀렸으면 그 줄을 먼저 고친 뒤 코드를 고친다. 요구사항 자체가 바뀌면 `bugfix`가 `living-spec` update로 넘긴다.
+- **요구사항이 바뀌면 `living-spec` update로 한다.** 기능을 더하거나 빼거나 다르게 하자는 요청, 화면 · 디자인 변경, roadmap(영역 추가 · 순서 · 번호) 변경 모두다. 이미 완료된 영역도 같다. 바뀌는 문서(roadmap · spec · backlog · 디자인 스펙)를 판정해 보이고, 뒤 영역에 미칠 영향은 backlog에 남긴다. spec이 바뀌면 `flow` 게이트①부터 다시 가서 plan · tasks · 구현까지 이어 간다.
+- **버그는 `bugfix`로 고친다.** 버그는 정해진 요구사항대로 돌아가지 않는 것이다(오류 · 테스트 실패 · spec과 다른 동작). 원하는 동작이 달라지는 요청은 버그가 아니고 `living-spec` update다. 원인을 먼저 찾고, 버그가 드러낸 spec 빈틈은 그 줄을 먼저 고친 뒤 코드를 고친다. 고치려면 요구사항을 바꿔야 하면 `bugfix`를 멈추고 `living-spec` update로 넘긴다.
+- **구현은 서브에이전트가 하고 메인은 지휘한다.** `flow` 5~7단계 · `flow-all` · `bugfix` 4~5단계 모두 같다. 메인은 spec · plan · tasks 같은 문서를 쓰고, 작업을 묶어 맡기고, 결과를 검증한다. 소스 코드와 테스트 코드는 메인이 직접 고치지 않고 `implementer` 에이전트에게 맡긴다. 작아 보이는 수정도 같다.
+  - 모델: 복잡한 묶음은 Opus(`implementer` 기본), 단순한 묶음은 Agent 호출에 `model: sonnet`을 준다. 애매하면 Opus.
+  - 복잡: 여러 모듈에 걸침 · 새 구조나 알고리즘 · 상태 · 비동기 · 렌더링이나 그림 엔진 · 원인이 깊은 버그. 단순: 한두 파일 · 이미 있는 패턴 반복 · 문구 · 스타일 값 · 설정 · 견본 데이터.
+  - 지시문에는 프로젝트 루트, 영역 폴더, 작업 번호(또는 버그 원인과 재현 조건), 끝 기준, 테스트 명령을 넣는다.
+  - 메인은 보고를 믿지 않고 테스트를 직접 다시 돌리고 tasks 체크와 바뀐 파일을 확인한다. 실패하면 같은 에이전트(SendMessage)나 새 `implementer`에게 돌려보낸다.
+  - 서브에이전트를 쓸 수 없는 환경(Codex 등)이면 그 사실을 알리고 메인이 `tdd` B대로 한다.
+- **서브에이전트 동시 실행은 의존 · CPU · 충돌로 정한다.** 한 영역 안의 묶음과 `flow-all`의 여러 영역 모두 같다.
+  - 의존하는 묶음은 앞 묶음이 끝날 때까지 기다린다. CPU와 상관없다.
+  - 독립 묶음은 내보내기 직전에 `node "{{harness}}/bin/harness.js" cpu`로 CPU를 잰다. 80 미만이면 동시에 내보낸다. 넘으면 `node "{{harness}}/bin/harness.js" cpu-wait 80`을 백그라운드 명령(Bash `run_in_background`)으로 띄워 두고 기다린다. CPU가 내려가면 그 명령이 끝나면서 메인이 깨어나고, 다시 재고 내보낸다. 그 사이 돌던 묶음이 먼저 끝나도 다시 잰다. 백그라운드 명령이 없는 환경이면 1분마다 `cpu`로 다시 잰다.
+  - 빌드 · 전체 테스트 · 화면 측정 · 브라우저를 띄우는 명령은 `node "{{harness}}/bin/harness.js" heavy -- <명령>`으로 돌린다. 이 PC에서 한 번에 하나만 돌고 나머지는 차례를 기다린다. 지시문에 이 명령 모양을 넣는다.
+  - 같은 파일을 만지는 작업은 병렬로 나누지 않고 한 묶음에 넣는다.
+  - 다른 묶음과 동시에 도는 묶음은 Agent 호출에 `isolation: "worktree"`를 준다. 한 폴더에서 동시에 돌면 서로 고치다 만 코드로 테스트가 흔들리기 때문이다. worktree에서는 plan의 설치 명령(예: `pnpm install`)을 먼저 돌린다.
+  - worktree 묶음이 끝나면 메인이 그 갈래를 작업 갈래에 하나씩 합치고, 테스트를 heavy로 다시 돌리고, tasks.md를 체크한다. 충돌 · 실패는 그 묶음의 `implementer`에게 돌려보낸다.
 - **spec이 현재 진실이다.** 바꿀 때는 spec을 먼저 고친다. spec과 코드는 같은 커밋에 넣는다. spec에는 지금 진실만 쓰고 확인 사항 문답 · 세션 기록 · 바뀐 경위는 남기지 않는다. 이력은 git이 맡는다.
 - **문서 언어:** `specs/` 아래 모든 문서는 한국어. 템플릿의 영어 절 제목은 한국어로 옮기고 원래 이름을 괄호로 남긴다(`## 기능 요구사항 (Functional Requirements)`). Spec Kit 명령이 절을 이름으로 찾기 때문이다. Given/When/Then은 `**상황** … **행동** … **결과**`. 코드·ID(`FR-001`·`SC-001`·`T001`)·파일 이름은 영어.
 - **spec에 기술 스택과 디자인 값을 쓰지 않는다.** 기술은 plan, 디자인은 디자인 스펙 파일. spec은 `## 화면`에 화면마다 보여 줄 것·할 수 있는 일만 쓴다.

@@ -1,2 +1,3 @@
 node_modules/
 skills/codelab-mermaid/scripts/.build/
+.speckit-check.json

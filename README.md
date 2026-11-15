@@ -8,7 +8,7 @@ GitHub Spec Kit 중 쓰는 것만 남기고, 그 위에 기능 개발 순서(flo
 |---|---|
 | `rules.md` | 항상 적용되는 규칙. 프로젝트의 SessionStart 훅이 세션마다 주입 |
 | `skills/` | 하네스 스킬 `flow` · `flow-all`(여러 영역 동시, spec · 시안만 승인) · `living-spec` · `mockup` · `design-consistency` · `tdd` · `bugfix`(원인 찾기는 superpowers `systematic-debugging`) · `llm-wiki` · 생성형 그림 `figure-style`(승인한 화풍 지침·명세·PNG 2장 포함) · 도식 `codelab-mermaid`(처음 한 번 그 폴더에서 `npm install && npx playwright install chromium`) + Spec Kit 명령 7개(`speckit-*`, 원본 그대로) |
-| `agents/` | `technical-researcher` |
+| `agents/` | `implementer`(코드 작업 담당, 기본 Opus · 단순한 묶음은 Sonnet. 메인은 지휘 · 검증만) · `technical-researcher` |
 | `speckit/` | Spec Kit 템플릿 3개 · bash 스크립트 4개(macOS·Linux·Windows Git Bash) · `init-options.json` · `integration.json` (원본 그대로) |
 | `bin/harness.js` | 설치 CLI |
 
@@ -52,7 +52,7 @@ cd <하네스 폴더> && git pull
 
 ## 기능 개발 순서 (`flow`)
 
-기능 spec → ①승인 → 디자인: 새 화면은 용도 조립 · HTML 시안 3개(`mockup`), 기존 화면 변경은 전/후 캡처 점검(`design-consistency` change) → ②승인·디자인 스펙 갱신 → plan → tasks(`tdd` A) → TDD 구현(`tdd` B) → 전체 테스트(`tdd` C) · 화면 측정과 캡처 자가 점검(`tdd` D) → converge → 커밋 (wiki는 사용자가 `llm-wiki`를 부를 때만)
+기능 spec → ①승인 → 디자인: 새 화면은 용도 조립 · HTML 시안 3개(`mockup`), 기존 화면 변경은 전/후 캡처 점검(`design-consistency` change) → ②승인·디자인 스펙 갱신 → plan → tasks(`tdd` A) → TDD 구현(`tdd` B, `implementer` 서브에이전트가 하고 메인은 지휘 · 검증) → 전체 테스트(`tdd` C) · 화면 측정과 캡처 자가 점검(`tdd` D) → converge → 커밋 (wiki는 사용자가 `llm-wiki`를 부를 때만)
 
 ## 디자인은 용도로 조립한다
 
@@ -60,7 +60,19 @@ cd <하네스 폴더> && git pull
 
 ## Spec Kit 갱신
 
-남긴 파일 내용은 고치지 않는다. 갱신은 연결된 프로젝트에 `진행 중`인 영역이 없을 때만 하고, harness 커밋 하나로 남겨 문제가 생기면 되돌린다. 새 버전을 받을 때는 빈 임시 폴더에서 `specify init --here --force --non-interactive --integration claude --script sh`를 실행하고, 아래만 그대로 덮어쓴다.
-- `.claude/skills/speckit-{specify,clarify,plan,tasks,analyze,implement,converge}` → `skills/`
-- `.specify/templates/{spec,plan,tasks}-template.md` → `speckit/templates/`
-- `.specify/scripts/bash/{common,check-prerequisites,setup-plan,setup-tasks}.sh` → `speckit/scripts/bash/`
+남긴 파일 내용은 고치지 않는다. 갱신은 연결된 프로젝트에 `진행 중`인 영역이 없을 때만 하고, harness 커밋 하나로 남겨 문제가 생기면 되돌린다. 세션 시작 훅이 하루 한 번 github/spec-kit 새 태그를 알린다. 필요한 것: uv.
+
+```bash
+node bin/harness.js speckit-check            # 하네스 버전과 원본 최신 버전
+node bin/harness.js speckit-update [vX.Y.Z]  # 기본은 최신 태그
+```
+
+`speckit-update`는 빈 임시 폴더에서 그 버전의 `specify init --here --force --non-interactive --integration claude --script sh`를 실행하고, 하네스에 이미 있는 `speckit-*` 스킬 · 템플릿 · 스크립트와 그것들이 새로 부르는 스크립트만 덮어쓴다. 올린 뒤 점검은 `CLAUDE.md` "Spec Kit 올리기".
+
+## 서브에이전트 도구
+
+```bash
+node bin/harness.js cpu [초]           # 몇 초 평균 CPU 사용률(%). 80 이상이면 새 묶음을 기다린다
+node bin/harness.js cpu-wait [기준] [분] # CPU가 내려오면 끝난다. 메인이 백그라운드로 띄워 깨어나는 신호로 쓴다
+node bin/harness.js heavy -- <명령>    # 빌드 · 전체 테스트 · 화면 측정을 PC에서 한 번에 하나만
+```
